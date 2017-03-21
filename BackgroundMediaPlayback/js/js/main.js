@@ -1,6 +1,6 @@
 ﻿//// Copyright (c) Microsoft Corporation. All rights reserved
 
-$(() => {
+document.addEventListener('DOMContentLoaded', () => {
     'use strict'
 
     const Uri = Windows.Foundation.Uri
@@ -13,10 +13,14 @@ $(() => {
     const mediaPlayer = new MediaPlayer
     mediaPlayer.autoPlay = false
 
+    const frag = document.createDocumentFragment()
+    const scratchpad = frag.appendChild(document.createElement('div'))
+
     Storage.StorageFile.getFileFromApplicationUriAsync(new Uri('ms-appx:///assets/playlist.json'))
         .then((storageFile) => Storage.FileIO.readTextAsync(storageFile))
         .then((jsonText) => {
-            const menu = $('#dropdownMenu1 + .dropdown-menu')
+            const bar = document.querySelector('#control-panel')
+            const menu = document.querySelector('#dropdownMenu1 + .dropdown-menu')
             const items = JSON.parse(jsonText).mediaList.items
             const playlist = new MediaPlaybackList
             playlist.autoRepeatEnabled = true
@@ -30,28 +34,28 @@ $(() => {
                 item.applyDisplayProperties(props)
                 playlist.items.append(item)
 
-                $(`<li><a href="#">${ object.title }</a></li>`)
-                    .click(() => mediaPlayer.source.moveTo(index))
-                    .appendTo(menu)
+                scratchpad.innerHTML = `<li><a href="#">${object.title}</a></li>`
+                menu.appendChild(scratchpad.firstChild)
+                  .addEventListener('click', () => mediaPlayer.source.moveTo(index))
             })
 
             mediaPlayer.source = playlist
-            $('#play-button').on('click', () => mediaPlayer.play())
-            $('#pause-button').on('click',() => mediaPlayer.pause())
-            $('#next-button').on('click', () => mediaPlayer.source.moveNext())
-            $('#prev-button').on('click', () => mediaPlayer.source.movePrevious())
+            bar.querySelector('.glyphicon-play').addEventListener('click',  () => mediaPlayer.play())
+            bar.querySelector('.glyphicon-pause').addEventListener('click', () => mediaPlayer.pause())
+            bar.querySelector('.glyphicon-forward').addEventListener('click',  () => mediaPlayer.source.moveNext())
+            bar.querySelector('.glyphicon-backward').addEventListener('click',  () => mediaPlayer.source.movePrevious())
         })
 
-    $('#menu-toggle').on('click', (e) => {
+    document.querySelector('#menu-toggle').addEventListener('click', (e) => {
         e.preventDefault()
-        $('#wrapper').toggleClass('toggled')
+        document.querySelector('#wrapper').classList.toggle('toggled')
     })
 
-    $('.dropdown-menu').on('click', 'li a', function () {
-        const text = $(this).text()
-        $(this)
-            .parents('.dropdown')
-            .find('.dropdown-toggle')
-            .html(`${ text } <span class="caret"></span>`)
+    document.querySelector('.dropdown-menu').addEventListener('click', ({ target }) => {
+        if (target.matches('li a')) {
+            const text = target.textContent
+            const dropdown = target.parentNode.parentNode.parentNode
+            dropdown.querySelector('.dropdown-toggle').innerHTML = `${text} <span class="caret"></span>`
+        }
     })
 })
