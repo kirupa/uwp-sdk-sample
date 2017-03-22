@@ -3,6 +3,9 @@
 document.addEventListener('DOMContentLoaded', () => {
     'use strict'
 
+    if (typeof Windows === 'undefined') {
+        return
+    }
     const Uri = Windows.Foundation.Uri
     const MediaSource = Windows.Media.Core.MediaSource
     const MediaPlaybackItem = Windows.Media.Playback.MediaPlaybackItem
@@ -13,9 +16,9 @@ document.addEventListener('DOMContentLoaded', () => {
     const mediaPlayer = new MediaPlayer
     mediaPlayer.autoPlay = false
 
-    const bar = document.querySelector('#control-panel')
-    const list = document.querySelector('#dropdownMenu1').parentNode
-    const listMenu = document.querySelector('#dropdownMenu1 + .dropdown-menu')
+    const controls = document.querySelector('#player-controls')
+    const list = document.querySelector('#playlist-dropdown')
+    const listMenu = list.querySelector('.dropdown-menu')
 
     Storage.StorageFile.getFileFromApplicationUriAsync(new Uri('ms-appx:///assets/playlist.json'))
         .then((storageFile) => Storage.FileIO.readTextAsync(storageFile))
@@ -41,17 +44,17 @@ document.addEventListener('DOMContentLoaded', () => {
 
             mediaPlayer.source = playlist
 
-            bar.querySelector('.glyphicon-play').parentNode.addEventListener('click', () => {
+            controls.querySelector('.glyphicon-play').parentNode.addEventListener('click', () => {
                 mediaPlayer.play()
             })
-            bar.querySelector('.glyphicon-pause').parentNode.addEventListener('click', () => {
+            controls.querySelector('.glyphicon-pause').parentNode.addEventListener('click', () => {
                 mediaPlayer.pause()
             })
-            bar.querySelector('.glyphicon-forward').parentNode.addEventListener('click', () => {
+            controls.querySelector('.glyphicon-forward').parentNode.addEventListener('click', () => {
                 list.selectedIndex++
                 mediaPlayer.source.moveNext()
             })
-            bar.querySelector('.glyphicon-backward').parentNode.addEventListener('click', () => {
+            controls.querySelector('.glyphicon-backward').parentNode.addEventListener('click', () => {
                 list.selectedIndex--
                 mediaPlayer.source.movePrevious()
             })

@@ -1,9 +1,6 @@
 ﻿'use strict'
 
 document.addEventListener('DOMContentLoaded', () => {
-    const pageWrapper = document.querySelector('#wrapper')
-    const sidebarToggle = document.querySelector('#menu-toggle')
-
     const overflow = (n, min, max) => {
         const range = max - min + 1
         let mod = (n - min) % range
@@ -13,8 +10,13 @@ document.addEventListener('DOMContentLoaded', () => {
         return min + mod
     }
 
+    // Detect WinRT support.
+    if (typeof Windows === 'undefined') {
+        document.querySelector('#winrt-alert').classList.toggle('hide')
+    }
     // Setup event listeners for page wrapper.
-    sidebarToggle.addEventListener('click', (e) => {
+    const pageWrapper = document.querySelector('#wrapper')
+    document.querySelector('#menu-toggle').addEventListener('click', (e) => {
         e.preventDefault()
         pageWrapper.classList.toggle('toggled')
     })
