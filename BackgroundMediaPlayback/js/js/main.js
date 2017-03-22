@@ -14,35 +14,8 @@ document.addEventListener('DOMContentLoaded', () => {
     mediaPlayer.autoPlay = false
 
     const bar = document.querySelector('#control-panel')
-    const drop = document.querySelector('#dropdownMenu1').parentNode
-    const dropLabel = drop.querySelector('.dropdown-toggle')
-    const dropMenu = document.querySelector('#dropdownMenu1 + .dropdown-menu')
-    const dropItems = dropMenu.getElementsByTagName('li')
-
-    Object.defineProperty(drop, 'selectedIndex', (() => {
-       let selectedIndex = -1
-       const overflow = (n, min, max) => {
-            const range = max - min + 1
-            let mod = (n - min) % range
-            if (mod < 0) {
-                mod += range
-            }
-            return min + mod
-        }
-        return {
-            configurable: true,
-            enumerable: true,
-            get() {
-                return selectedIndex
-            },
-            set(index) {
-                const lastIndex = Math.max(0, dropItems.length - 1)
-                selectedIndex = overflow(index, 0, lastIndex)
-                const { innerText } = dropItems[selectedIndex]
-                dropLabel.innerHTML = `${innerText} <span class="caret"></span>`
-            }
-        }
-    })())
+    const list = document.querySelector('#dropdownMenu1').parentNode
+    const listMenu = document.querySelector('#dropdownMenu1 + .dropdown-menu')
 
     Storage.StorageFile.getFileFromApplicationUriAsync(new Uri('ms-appx:///assets/playlist.json'))
         .then((storageFile) => Storage.FileIO.readTextAsync(storageFile))
@@ -63,7 +36,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 const li = document.createElement('li')
                 li.innerHTML = `<a href="#">${object.title}</a>`
                 li.addEventListener('click', () => mediaPlayer.source.moveTo(index))
-                dropMenu.appendChild(li)
+                listMenu.appendChild(li)
             })
 
             mediaPlayer.source = playlist
@@ -75,26 +48,13 @@ document.addEventListener('DOMContentLoaded', () => {
                 mediaPlayer.pause()
             })
             bar.querySelector('.glyphicon-forward').parentNode.addEventListener('click', () => {
-                drop.selectedIndex++
+                list.selectedIndex++
                 mediaPlayer.source.moveNext()
             })
             bar.querySelector('.glyphicon-backward').parentNode.addEventListener('click', () => {
-                drop.selectedIndex--
+                list.selectedIndex--
                 mediaPlayer.source.movePrevious()
             })
         })
 
-    document.querySelector('#menu-toggle').addEventListener('click', (e) => {
-        e.preventDefault()
-        document.querySelector('#wrapper').classList.toggle('toggled')
-    })
-
-    document.querySelector('.dropdown-menu').addEventListener('click', ({ target }) => {
-        if (target.msMatchesSelector('li a')) {
-            let index = 0
-            let node = target.parentNode
-            while ((node = node.previousElementSibling)) index++
-            drop.selectedIndex = index
-        }
-    })
 })
