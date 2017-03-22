@@ -69,7 +69,7 @@
     <Content Include="images\storelogo-sdk.png" />
     <Content Include="images\tile-sdk.png" />
     <Content Include="images\windows-sdk.png" />
-    <Content Include="default.html" />
+    <Content Include="index.html" />
     <Content Include="js\main.js" />
     <Content Include="js\ui.js" />
   </ItemGroup>
