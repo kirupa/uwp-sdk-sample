@@ -62,6 +62,7 @@
     <Content Include="assets\Ring02.wma" />
     <Content Include="assets\Ring03.wma" />
     <Content Include="css\default.css" />
+    <Content Include="images\azure.svg" />
     <Content Include="images\microsoft-sdk.png" />
     <Content Include="images\smalltile-sdk.png" />
     <Content Include="images\splash-sdk.png" />
