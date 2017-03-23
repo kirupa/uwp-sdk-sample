@@ -22,14 +22,31 @@ document.addEventListener('DOMContentLoaded', () => {
     const rootURL = location.protocol === 'ms-appx-web:'
         ? 'ms-appx:///'
         : location.href.replace(/\bindex.html$/, '')
-    
-    Storage.StorageFile.getFileFromApplicationUriAsync(new Uri(`${rootURL}assets/playlist.json`))
-        .then((storageFile) => Storage.FileIO.readTextAsync(storageFile))
-        .then((jsonText) => {
+
+    const getJSON = function(url) {
+        return new Promise(function(resolve, reject) {
+            const xhr = new XMLHttpRequest
+            xhr.open('get', url, true)
+            xhr.responseType = 'json'
+            xhr.onload = function() {
+                const status = xhr.status;
+                if (status == 200) {
+                    resolve(xhr.response);
+                } else {
+                    reject(status);
+                }
+            }
+            xhr.send()
+        })
+    }
+
+    getJSON(`${rootURL}assets/playlist.json`)
+        .catch((e) => console.log(1, e))
+        .then((json) => {
             const playlist = new MediaPlaybackList
             playlist.autoRepeatEnabled = true
 
-            const items = JSON.parse(jsonText).mediaList.items
+            const items = json.mediaList.items
             items.forEach((object, index) => {
                 const source = MediaSource.createFromUri(new Uri(object.mediaUri))
                 const item = new MediaPlaybackItem(source)
