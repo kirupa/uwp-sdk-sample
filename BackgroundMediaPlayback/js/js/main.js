@@ -19,8 +19,11 @@ document.addEventListener('DOMContentLoaded', () => {
     const controls = document.querySelector('#player-controls')
     const list = document.querySelector('#playlist-dropdown')
     const listMenu = list.querySelector('.dropdown-menu')
-
-    Storage.StorageFile.getFileFromApplicationUriAsync(new Uri('ms-appx:///assets/playlist.json'))
+    const rootURL = location.protocol === 'ms-appx-web:'
+        ? 'ms-appx:///'
+        : location.href.replace(/\bindex.html$/, '')
+    
+    Storage.StorageFile.getFileFromApplicationUriAsync(new Uri(`${rootURL}assets/playlist.json`))
         .then((storageFile) => Storage.FileIO.readTextAsync(storageFile))
         .then((jsonText) => {
             const playlist = new MediaPlaybackList
