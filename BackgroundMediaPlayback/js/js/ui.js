@@ -12,6 +12,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     // Detect WinRT support.
     if (typeof Windows === 'undefined') {
+        document.querySelector('#store-badge').classList.toggle('hide')
         document.querySelector('#winrt-alert').classList.toggle('hide')
     }
     // Setup event listeners for page wrapper.

@@ -67,6 +67,7 @@
     <Content Include="images\smalltile-sdk.png" />
     <Content Include="images\splash-sdk.png" />
     <Content Include="images\squaretile-sdk.png" />
+    <Content Include="images\store.svg" />
     <Content Include="images\storelogo-sdk.png" />
     <Content Include="images\tile-sdk.png" />
     <Content Include="images\windows-sdk.png" />

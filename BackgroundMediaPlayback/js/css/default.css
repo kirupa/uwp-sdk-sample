@@ -2,7 +2,14 @@
     display: inline;
 }
 
+.ms-store img {
+    float: right;
+    height: 50px;
+    width:  100px;
+}
+
 .powered-by-azure img {
+    margin-left: 20px;
     float:right;
     height:50px;
     width:50px;
