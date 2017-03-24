@@ -11,7 +11,10 @@ document.addEventListener('DOMContentLoaded', () => {
     const MediaPlaybackItem = Windows.Media.Playback.MediaPlaybackItem
     const MediaPlaybackList = Windows.Media.Playback.MediaPlaybackList
     const MediaPlayer = Windows.Media.Playback.MediaPlayer
-    const Storage = Windows.Storage
+
+    const baseURL = /^ms-appx\b/.test(location.protocol)
+        ? 'ms-appx:///'
+        : location.href.replace(/[-\w]+.html$/, '')
 
     const mediaPlayer = new MediaPlayer
     mediaPlayer.autoPlay = false
@@ -19,28 +22,23 @@ document.addEventListener('DOMContentLoaded', () => {
     const controls = document.querySelector('#player-controls')
     const list = document.querySelector('#playlist-dropdown')
     const listMenu = list.querySelector('.dropdown-menu')
-    const rootURL = location.protocol === 'ms-appx-web:'
-        ? 'ms-appx:///'
-        : location.href.replace(/\bindex.html$/, '')
 
-    const getJSON = function(url) {
-        return new Promise(function(resolve, reject) {
-            const xhr = new XMLHttpRequest
-            xhr.open('get', url, true)
-            xhr.responseType = 'json'
-            xhr.onload = function() {
-                const status = xhr.status;
-                if (status == 200) {
-                    resolve(xhr.response);
-                } else {
-                    reject(status);
-                }
+    const getJSON = (url) => new Promise((resolve, reject) => {
+        const xhr = new XMLHttpRequest
+        xhr.open('get', url, true)
+        xhr.responseType = 'json'
+        xhr.onload = () => {
+            const status = xhr.status;
+            if (status == 200) {
+                resolve(xhr.response);
+            } else {
+                reject(status);
             }
-            xhr.send()
-        })
-    }
+        }
+        xhr.send()
+    })
 
-    getJSON(`${rootURL}assets/playlist.json`)
+    getJSON(baseURL + 'assets/playlist.json')
         .catch((e) => console.log(1, e))
         .then((json) => {
             const playlist = new MediaPlaybackList
@@ -48,7 +46,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const items = json.mediaList.items
             items.forEach((object, index) => {
-                const source = MediaSource.createFromUri(new Uri(rootURL + object.mediaUri))
+                const source = MediaSource.createFromUri(new Uri(baseURL + object.mediaUri))
                 const item = new MediaPlaybackItem(source)
                 const props = item.getDisplayProperties()
 
@@ -79,5 +77,4 @@ document.addEventListener('DOMContentLoaded', () => {
                 mediaPlayer.source.movePrevious()
             })
         })
-
 })
