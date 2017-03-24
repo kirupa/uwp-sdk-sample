@@ -5,6 +5,8 @@
 
 # Background media playback sample
 
+[![Deploy to Azure](http://azuredeploy.net/deploybutton.svg)](https://azuredeploy.net/)
+
 Shows how to use MediaPlayer and MediaPlaybackList
 to create a collection of songs or videos that can continue to play even
 when the app is no longer in the foreground.
