@@ -48,7 +48,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
             const items = json.mediaList.items
             items.forEach((object, index) => {
-                const source = MediaSource.createFromUri(new Uri(object.mediaUri))
+                const source = MediaSource.createFromUri(new Uri(rootURL + object.mediaUri))
                 const item = new MediaPlaybackItem(source)
                 const props = item.getDisplayProperties()
 

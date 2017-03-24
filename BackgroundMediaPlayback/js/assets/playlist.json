@@ -5,19 +5,19 @@
       {
         "mediaType": "music",
         "title": "Ring 1",
-        "mediaUri": "ms-appx:///Assets/Ring01.wma",
+        "mediaUri": "assets/Ring01.wma",
         "albumArtAttribution": "Autumn Yellow Leaves | George Hodan"
       },
       {
         "mediaType": "music",
         "title": "Ring 2",
-        "mediaUri": "ms-appx:///Assets/Ring02.wma",
+        "mediaUri": "assets/Ring02.wma",
         "albumArtAttribution": "Abstract Background | Larisa Koshkina"
       },
       {
         "mediaType": "music",
         "title": "Ring 3",
-        "mediaUri": "ms-appx:///Assets/Ring03.wma",
+        "mediaUri": "assets/Ring03.wma",
         "albumArtAttribution": "Snow Covered Mountains | Petr Kratochvil"
       }
     ]
