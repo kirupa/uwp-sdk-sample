@@ -4,15 +4,17 @@
 
 .ms-store img {
     float: right;
-    height: 50px;
+    height: 32px;
     width:  100px;
+    margin: 9px 0;
 }
 
 .powered-by-azure img {
+    float: right;
+    height: 30px;
+    width: 45px;
+    margin: 9px 0;
     margin-left: 20px;
-    float:right;
-    height:50px;
-    width:50px;
 }
 
 #wrapper {
