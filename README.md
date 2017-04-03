@@ -4,7 +4,8 @@
 
 # Universal Windows Platform (UWP) app samples
 
-[![Deploy to Azure](http://azuredeploy.net/deploybutton.svg)](https://azuredeploy.net/)
+[![Deploy to Azure](http://azuredeploy.net/deploybutton.svg)](https://azuredeploy.net/) 
+[![Install UWP app](https://cdn.rawgit.com/jdalton/uwp-sdk-sample/master/BackgroundMediaPlayback/js/images/store_bw.svg)](https://www.microsoft.com/en-us/store/p/uwp-sdk-samples/9n92kfg5tjh6)
 
 This repo contains the samples that demonstrate the API usage patterns for the Universal Windows Platform (UWP) in the Windows Software Development Kit (SDK) for Windows 10. These code samples were created with the Universal Windows Platform templates available in Visual Studio, and are designed to run on desktop, mobile, and future devices that support the Universal Windows Platform.
 
